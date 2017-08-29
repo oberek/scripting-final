@@ -2,85 +2,14 @@
  ./client/components/App.jsx
  */
 import React from 'react';
-const http = require('http');
+// import '../index.css'
+const whatDog = require('what-dog');
 
-let whatDog = function whatDog(imageUrl) {
-    if (!(imageUrl.endsWith(".jpg") || imageUrl.endsWith(".png") || imageUrl.endsWith(".bmp"))) {
-        return Promise.reject(new Error('A valid url is required.'));
-    }
-    console.log("URL: " + imageUrl);
-    // DEBUG DOG PICTURE URL
-    // https://images.pexels.com/photos/7720/night-animal-dog-pet.jpg
-    const postData = querystring.stringify({
-        isTest: 'False',
-        version: '001',
-        faceUrl: imageUrl,
-        faceName: imageUrl
-    });
+whatDog('http://imgur.com/B7a15F5.jpg')
+.then(doggyData => {
+    console.log(doggyData);
+});
 
-    const options = {
-        hostname: 'https://www.what-dog.net/Home/Analyze',
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/x-www-form-urlencoded',
-            'Content-Length': Buffer.byteLength(postData)
-        }
-    };
-    http.request(options, (res) => {
-        console.log("WOW!");
-        console.log(`STATUS: $(res.statusCode)`);
-        console.log(`HEADERS: ${JSON.stringify(res.headers)}`);
-        res.setEncoding('utf8');
-        res.on('data', (chunk) => {
-            console.log(`BODY: ${chunk}`);
-        });
-        res.on('end', () => {
-            console.log('No more data in response.');
-        });
-    });
-    return fetch('https://www.what-dog.net/Home/Analyze', {
-        method: 'POST',
-        mode: 'no-cors',
-        headers: {
-            "Content-type": "application/x-www-form-urlencoded; charset=UTF-8"
-        },
-        query: { isTest: 'False', version: '001', faceUrl: imageUrl, faceName: imageUrl}
-    })
-    // return got.post('https://www.what-dog.net/Home/Analyze', {
-    //     query: {
-    //         isTest: 'False',
-    //         version: '001',
-    //         faceUrl: imageUrl,
-    //         faceName: imageUrl
-    //     }
-    // })
-        .then(response => {
-            console.log(response);
-        try {
-            // Silly Microsoft double-JSON encoded their output?!
-            const whatDog = JSON.parse(JSON.parse(response.body));
-            return {
-                isDog: whatDog.IsDog,
-                breed: whatDog.BreedName,
-                about: whatDog.Keywords
-            };
-        } catch (err) {
-            return {
-                isDog: false,
-                breed: 'Not a dog',
-                about: '',
-                err: err
-            };
-        }
-    }).catch(err => {
-        return {
-            isDog: false,
-            breed: 'Not a dog',
-            about: '',
-            err: err
-        };
-    });
-};
 
 class Header extends React.Component {
     render() {
@@ -130,11 +59,12 @@ class Picture extends React.Component {
     render() {
         return (
             <div>
-                <img src="https://giphy.com/gifs/smile-pug-dog-oDLDbBgf0dkis"/>
+
             </div>
         )
     }
 }
+
 class PictureAndInput extends React.Component {
     constructor(props) {
         super(props);
@@ -159,7 +89,6 @@ export default class App extends React.Component {
             <div>
                 <Header/>
                 <div id="bodyContainer">
-                    <PictureAndInput/>
                     <PictureAndInput/>
                 </div>
             </div>
