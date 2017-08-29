@@ -3,12 +3,12 @@
  */
 import React from 'react';
 // import '../index.css'
-const whatDog = require('what-dog');
-
-whatDog('http://imgur.com/B7a15F5.jpg')
-.then(doggyData => {
-    console.log(doggyData);
-});
+// const whatDog = require('what-dog');
+//
+// whatDog('http://imgur.com/B7a15F5.jpg')
+// .then(doggyData => {
+//     console.log(doggyData);
+// });
 
 
 class Header extends React.Component {
