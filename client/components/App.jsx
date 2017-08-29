@@ -48,7 +48,7 @@ class Input extends React.Component {
 
     handleSubmit(e) {
         e.preventDefault();
-        whatDog(this.state.url);
+        // whatDog(this.state.url);
     }
 }
 class Picture extends React.Component {
